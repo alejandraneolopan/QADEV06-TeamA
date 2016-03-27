@@ -1,0 +1,9 @@
+{
+  "username" :  "Lucero",
+  "password" :  "Control123!",
+  "rootURI" :  "https://172.20.208.66:4040",
+  "typeAuthentication": {"jwt" : "jwt ",
+                         "basic" : "Basic "}
+}
+
+

@@ -1,0 +1,17 @@
+{
+  "name": "RoomManager",
+  "version": "0.0.1",
+  "description": "simple rest api automation",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },,
+  "author": "LARA",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "superagent": "^1.8.1",
+    "superagent-proxy": "^1.0.0"
+  }
+}
