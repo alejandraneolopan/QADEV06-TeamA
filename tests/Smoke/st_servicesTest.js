@@ -6,8 +6,8 @@ var config = require('../../config/config.json');
 
 describe("Service - Feature", function(){
 
-    this.slow(10000);
-    this.timeout(10000);
+    this.slow(config.timeSlow);
+    this.timeout(config.timeOut);
     var roomID;
     var serviceID;
 
