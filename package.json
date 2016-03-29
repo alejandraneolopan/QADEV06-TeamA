@@ -1,0 +1,17 @@
+{
+  "name": "roommanager",
+  "version": "1.0.0",
+  "description": "Room Manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "LARA",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "mongodb": "^2.1.11",
+    "mongoose": "^4.4.9"
+  }
+}

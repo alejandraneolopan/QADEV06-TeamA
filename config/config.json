@@ -1,0 +1,9 @@
+{
+  "username" :  "ArielYanarico",
+  "password" :  "A123456a",
+  "rootURI" :  "https://172.20.208.61:4040",
+  "typeAuthentication": {"jwt" : "jwt ",
+                         "basic" : "Basic "}
+}
+
+
