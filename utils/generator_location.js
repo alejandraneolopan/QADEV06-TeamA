@@ -14,7 +14,7 @@ var generateLocation = function(){
 };
 exports.generateLocation = generateLocation;
 
-var setParentId = function(parentID){
-    location.parentId = parentID;
+var setParentId = function(bodyLocation, parentID){
+    return bodyLocation.parentId = parentID;
 };
 exports.setParentId = setParentId;

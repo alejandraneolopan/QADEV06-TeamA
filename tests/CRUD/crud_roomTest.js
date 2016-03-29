@@ -4,40 +4,44 @@ var generator = require('../../utils/generator.js');
 var condition = require('../../lib/Conditions/condition.js');
 var config = require('../../config/config.json');
 
-describe("Rooms - Feature", function(){
+describe("CRUD ROOMS", function(){
 
-    this.slow(config.timeSlow);
-    this.timeout(config.timeOut);
-    var RoomID;
-
+    this.slow(10000);
+    this.timeout(10000);
+    var RoomID, RoomName ;
+    var RoomsList;
     before(function(done){
         request.authentication.postLogin(function(err, res){
             condition.preCondition
                 .findAllRooms(function(res){
+                    RoomsList=res;
                     RoomID = res[0]._id;
+                    RoomName=res[0].customDisplayName;
                     done();
                 });
         });
     });
 
-    it('GET /rooms returns status code 200', function(done){
+    it('CRUD - GET /room returns all rooms', function(done){
         request.room.getRoom(function(err, res){
-            expect(res.status).to.equal(200);
-            done();
-        });
-     });
-
-    it('GET /room by ID returns status code 200', function(done){
-        request.room.getRoomID(RoomID, function(err, res){
-            expect(res.status).to.equal(200);
+            expect(res.body.length).to.equal(RoomsList.length);
             done();
         });
     });
 
-    it('PUT /rooms returns status code 200', function(done){
+    it('CRUD - GET /rooms/{:roomId} returns a room', function(done){
+        request.room.getRoomID(RoomID, function(err, res){
+            expect(res.body._id).to.equal(RoomID.toString());
+            expect(res.body.customDisplayName).to.equal(RoomName);
+            done();
+        });
+    });
+
+    it('CRUD - PUT /rooms api modify a specific room', function(done){
         var body = generator.generator_room.generateRoom();
+        RoomName=body.customDisplayName;
         request.room.putRoom(RoomID, body, function(err, res){
-            expect(res.status).to.equal(200);
+            expect(res.body.customDisplayName).to.equal(RoomName);
             done();
         });
     });

@@ -1,9 +1,23 @@
 {
   "username" :  "Lucero",
   "password" :  "Control123!",
-  "rootURI" :  "https://172.20.208.66:4040",
+  "rootURI" :  "https://172.20.208.66",
+  "port" : "4040",
   "typeAuthentication": {"jwt" : "jwt ",
-                         "basic" : "Basic "}
+                         "basic" : "Basic "},
+
+  "endPoints" : { "publicKey" : "/public-key",
+                  "login" : "/login",
+                  "serviceTypes" : "/service-types",
+                  "resources" : "/resources",
+                  "services" : "/services",
+                  "rooms" : "/rooms",
+                  "meetings" : "/meetings",
+                  "outOfOrders" : "/out-of-orders",
+                  "locations" : "/locations"
+  },
+  "timeSlow": 10000,
+  "timeOut": 10000
 }
 
 
