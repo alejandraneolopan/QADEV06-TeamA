@@ -8,6 +8,9 @@ var resource = {
     "description": "",
     "quantity" : ""
 };
+var listResource = {
+    "id": []
+};
 
 var generateResource = function(){
     resource.name = generator.generateValues();
@@ -29,6 +32,11 @@ var resources = {"associations":[]};
 var storeResources= function(resource){
     resources.associations.push(resource);
 };
+var getResourcesList= function(){
+    console.log("lista json  "+listResource);
+    return listResource.id;
+};
+exports.getResourcesList = getResourcesList;
 
 var getResources= function(){
     return resources;

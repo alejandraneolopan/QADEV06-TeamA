@@ -1,74 +1,78 @@
-var expect = require('chai');
+var expect = require('chai').expect;
 var request = require('../../lib/RequestManager/manager.js');
 var generator = require('../../utils/generator.js');
+var condition = require('../../lib/Conditions/condition.js');
+var config = require('../../config/config.json');
 
-describe("Suit: Locations Service", function(){
-    this.slow(10000);
-    this.timeout(10000);
+describe("Locations  - Feature", function(){
+    this.slow(config.timeSlow);
+    this.timeout(config.timeOut);
     var bodyLocation;
-    var parentID;
-    var sonLocationID;
+    var locationID;
 
     before(function(done){
-        request.maut.postLogin(function(err, res){
+        request.authentication.postLogin(function(err, res){
             done();
         });
     });
 
     beforeEach(function(done){
         bodyLocation = generator.generator_location.generateLocation();
-        request.mloc.postLocation(bodyLocation, function(err, res){
-            console.log("----------------------------------------------");
-            parentID = res.body._id;
-            console.log("New Location has been created: " + parentID);
-            console.log(res.body);
-
-            bodyLocation = generator.generator_location.generateLocation();
-            generator.generator_location.setParentId(parentID);
-            request.mloc.postLocation(bodyLocation, function(err, res){
-                console.log("----------------------------------------------");
-                console.log("New Location has been created with parentID: " + parentID);
-                sonLocationID = res.body._id;
-                console.log(res.body);
+        condition.preCondition.insertLocation(bodyLocation, function(result){
+            locationID = result._id;
                 done();
             });
-        });
+    });
+
+    afterEach(function(done){
+        if (locationID !== undefined) {
+            condition.removeLocation( locationID, function(){
+                done();
+            });
+        };
     });
 
     it('GET /All the locations stored in the database, returns status code 200', function(done){
-        request.mloc.getLocations(function(err, res){
-            console.log("----------------------------------------------");
-            console.log("All Locations:");
-            console.log(res.body);
+        request.location.getLocations(function(err, res){
+            expect(res.status).to.equal(200);
             done();
         });
     });
 
     it('GET /A specific location, returns status code 200', function(done){
-        request.mloc.getLocationsID(parentID, function(err, res){
-            console.log("----------------------------------------------");
-            console.log("Specific Location:");
-            console.log(res.body);
+        request.location.getLocationById(locationID, function(err, res){
+            expect(res.status).to.equal(200);
+            done();
+        });
+    });
+
+    it('GET /A specific location, returns 404 status code when a non-existent ID is used', function(done){
+        var nonExistentLocationID = generator.generateValues();
+        request.location.getLocationById(nonExistentLocationID, function(err, res){
+            expect(res.status).to.equal(404);
             done();
         });
     });
 
     it('PUT /A specific location, returns status code 200', function(done){
         var body = generator.generator_location.generateLocation();
-        request.mloc.putLocation(sonLocationID, body, function(err, res){
-            console.log("----------------------------------------------");
-            console.log("Specific Location:");
-            console.log(res.body);
+        request.location.putLocation(locationID, body, function(err, res){
+            expect(res.status).to.equal(200);
             done();
         });
     });
 
     it('DEL /A specific location, returns status code 200', function(done){
-        var body = generator.generator_location.generateLocation();
-        request.mloc.delLocation(sonLocationID, function(err, res){
-            console.log("----------------------------------------------");
-            console.log("Specific Location:");
-            console.log(res.status);
+        request.location.delLocation(locationID, function(err, res){
+            expect(res.status).to.equal(200);
+            done();
+        });
+    });
+
+    it('DEL /A specific location, returns 404 status code when a non-existent location is used', function(done){
+        var nonExistentLocationID = generator.generateValues();
+        request.location.delLocation(nonExistentLocationID, function(err, res){
+            expect(res.status).to.equal(404);
             done();
         });
     });
