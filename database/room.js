@@ -20,7 +20,7 @@ var table = dbConfig.tables.room;
 /**
  * Find a specific room by ID in the database
  * @param {Object} id - Room Id
- * @param {function} callbacK - function for handle the object found
+ * @param {function} callback - function for handle the object found
  */
 var findRoom = function(id, callback){
 	mongoClient.connect(url, function(err, db) {
@@ -31,7 +31,7 @@ var findRoom = function(id, callback){
 
 /**
  * Return all rooms
- * @param {function} callbacK - function for handle the array
+ * @param {function} callback - function for handle the array
  */
 var findAllRooms = function(callback){
 	mongoClient.connect(url, function(err, db) {
@@ -43,7 +43,7 @@ var findAllRooms = function(callback){
 /**
  * Return all rooms pertaining to a service
  * @param {Object} id - Service Id
- * @param {function} callbacK - function for handle the array
+ * @param {function} callback- function for handle the array
  */
 var findAllRoomsOfOneService = function(serviceId, callback){
 	mongoClient.connect(url, function(err, db) {
@@ -52,6 +52,31 @@ var findAllRoomsOfOneService = function(serviceId, callback){
     });
 };
 
+/**
+ * Update a room according the json params
+ * @param {string} id - Room Id
+ * @param {Object} resourceToInsert - Resource data in JSON structure
+ * @param {function} callback - function for handle the object modified
+ */
+var addResourceToRoom = function(id,resourceToInsert, callback){
+        var jsonResource=
+        { $push: {
+            resources: {
+            "quantity": resourceToInsert.quantity,
+            "resourceId": resourceToInsert._id.toString(),
+                "_id": ObjectId(resourceToInsert._id)
+            }
+        } };
+
+        mongoClient.connect(url, function(err, db) {
+            DBmanager.setTable(table);
+            DBmanager.update(ObjectId(id),
+                jsonResource,
+                db, callback);
+        });
+
+};
 exports.findRoom = findRoom;
 exports.findAllRooms = findAllRooms;
 exports.findAllRoomsOfOneService = findAllRoomsOfOneService;
+exports.addResourceToRoom = addResourceToRoom;

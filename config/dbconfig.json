@@ -1,10 +1,11 @@
 {
-	"url":"mongodb://172.20.208.61:27017/roommanager",
+	"url":"mongodb://172.20.208.66:27017/roommanager",
 	"tables":
 	{
 		"location":"locations",
 		"resource":"resourcemodels",
 		"service":"services",
-		"room":"rooms"
+		"room":"rooms",
+	  	"outoforders":"outoforders"
 	}
 }

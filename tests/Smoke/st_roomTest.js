@@ -1,50 +1,43 @@
-var expect = require('chai');
+var expect = require('chai').expect;
 var request = require('../../lib/RequestManager/manager.js');
 var generator = require('../../utils/generator.js');
-var precondition = require('../../lib/Conditions/assertion.js');
-describe("Suit: Rooms Service", function(){
+var condition = require('../../lib/Conditions/condition.js');
+var config = require('../../config/config.json');
 
-    this.slow(10000);
-    this.timeout(10000);
-    var RoomID ;// '56f811cfb020b44c0547bde7';
+describe("Rooms - Feature", function(){
 
-    before(function(done){
-        request.maut.postLogin(function(err, res){
-            done();
-        });
-    });
+    this.slow(config.timeSlow);
+    this.timeout(config.timeOut);
+    var RoomID;
 
     before(function(done){
-        precondition.findAllRooms(function(res){
-            RoomID = res[0]._id;
-            done();
+        request.authentication.postLogin(function(err, res){
+            condition.preCondition
+                .findAllRooms(function(res){
+                    RoomID = res[0]._id;
+                    done();
+                });
         });
     });
 
     it('GET /rooms returns status code 200', function(done){
-        request.mroo.getRoom(function(err, res){
-            console.log("----------------------------------------------");
-            console.log("All Rooms:");
-            console.log(res.status);
+        request.room.getRoom(function(err, res){
+            expect(res.status).to.equal(200);
             done();
         });
      });
 
     it('GET /room by ID returns status code 200', function(done){
-        request.mroo.getRoomID(RoomID, function(err, res){
-            console.log("----------------------------------------------");
-            console.log("Room by ID: " + RoomID);
-            console.log(res.status);
+        request.room.getRoomID(RoomID, function(err, res){
+            expect(res.status).to.equal(200);
             done();
         });
     });
 
     it('PUT /rooms returns status code 200', function(done){
         var body = generator.generator_room.generateRoom();
-        request.mroo.putRoom(RoomID, body, function(err, res){
-            console.log("----------------------------------------------");
-            console.log("Room: " + RoomID + " Has been uploaded");
-            console.log(res.status);
+        request.room.putRoom(RoomID, body, function(err, res){
+            expect(res.status).to.equal(200);
             done();
         });
     });

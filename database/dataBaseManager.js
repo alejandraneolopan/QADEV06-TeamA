@@ -14,7 +14,6 @@ var insert = function (toInsert, db, callback) {
     db.collection(table).insert(
         toInsert
         , function (err, result) {
-        console.log("INSERTED");
         callback(result.ops[0]);
         db.close();
     });
@@ -31,7 +30,6 @@ var find = function (id, db, callback) {
             "_id":id
         }).toArray(
         function(err, result) {
-        console.log("FOUND");
         callback(result[0]);
     });
 };
@@ -46,7 +44,6 @@ var findByParameters = function (json, db, callback) {
         json
         ).toArray(
         function(err, result) {
-        console.log("FOUND");
         callback(result);
     });
 };
@@ -61,14 +58,13 @@ var findAll = function (db, callback) {
         {
         }).toArray(
         function(err, result) {
-        console.log("FOUND-ALL");
         callback(result);
     });
 };
 /**
  * Delete a specific object by ID in the database according table name
  * @param {Object} id - Object Id
- * @param {function} callbacK - function for handle the object deleted
+ * @param {function} callback - function for handle the object deleted
  */
 var remove = function (id, db, callback) {
 
@@ -77,9 +73,39 @@ var remove = function (id, db, callback) {
         	"_id" : id
         }
         , function (err, result) {
-        console.log("REMOVED");
         callback();
     });
+};
+/**
+ * Update a table with a json
+ * @param {Object} id - Object Id
+ * @param {Object} setJson - $set must contain all parameters to change,
+ *                 e.g.  { $push: {
+                             resources: {
+                             "quantity": resourceToInsert.quantity,
+                             "resourceId": resourceToInsert._id.toString(),
+                                 "_id": ObjectId(resourceToInsert._id)
+                             }
+                         } };
+ * @param {function} callback - function for handle the object deleted
+ */
+var update = function(id, setJson,db, callback){
+    try {
+
+        db.collection(table).update(
+            {
+                "_id" : id
+            },
+            setJson
+            , function (err, result) {
+                callback();
+            });
+
+    }
+    catch (e) {
+        print(e);
+    }
+
 };
 /**
  * Set the current table
@@ -94,4 +120,5 @@ exports.find = find;
 exports.findAll = findAll;
 exports.findByParameters = findByParameters;
 exports.remove = remove;
+exports.update = update;
 exports.setTable = setTable;

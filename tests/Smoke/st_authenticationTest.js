@@ -1,38 +1,40 @@
-var expect = require('chai');
+var expect = require('chai').expect;
 var request = require('../../lib/RequestManager/manager.js');
 var generator = require('../../utils/generator.js');
-describe("Suit: Authentication Service", function(){
+var config = require('../../config/config.json');
 
-    this.slow(10000);
-    this.timeout(10000);
+describe("Authentication - Feature", function(){
+
+    this.slow(config.timeSlow);
+    this.timeout(config.timeOut);
 
     it('POST /login API returns 200 with the "local" authentication', function(done){
-        request.maut.postLogin(function(err, res){
-            console.log(res.status);
+        request.authentication.postLogin(function(err, res){
+            expect(res.status).to.equal(200);
             done();
         });
     });
     it('POST /login API returns 401 status when a incorrect password is used', function(done){
-        request.maut.postLoginIncorrect("incorrectPassword", function(err, res){
-            console.log(res.status);
+        request.authentication.postLoginIncorrect("incorrectPassword", function(err, res){
+            expect(res.status).to.equal(401);
             done();
         });
     });
     it('POST /login API returns 401 status when a non-existent user is used', function(done){
-        request.maut.postLoginIncorrect("incorrectAccount", function(err, res){
-            console.log(res.status);
+        request.authentication.postLoginIncorrect("incorrectAccount", function(err, res){
+            expect(res.status).to.equal(401);
             done();
         });
     });
     it('POST /login API returns 400 status code when the syntax is incorrect', function(done){
-        request.maut.postLoginIncorrect("incorrectSyntax", function(err, res){
-            console.log(res.status);
+        request.authentication.postLoginIncorrect("incorrectSyntax", function(err, res){
+            expect(res.status).to.equal(400);
             done();
         });
     });
-    it.only('POST /login API returns 400 status code without a required parameter.', function(done){
-        request.maut.postLoginIncorrect("missRequeriment", function(err, res){
-            console.log(res.status);
+    it('POST /login API returns 400 status code without a required parameter.', function(done){
+        request.authentication.postLoginIncorrect("missRequeriment", function(err, res){
+            expect(res.status).to.equal(400);
             done();
         });
     });
