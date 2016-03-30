@@ -26,3 +26,6 @@ exports.generator_room = generator_room;
 
 var generator_location = require('../utils/generator_location.js');
 exports.generator_location = generator_location;
+
+var generator_service = require('../utils/generator_service.js');
+exports.generator_service = generator_service;

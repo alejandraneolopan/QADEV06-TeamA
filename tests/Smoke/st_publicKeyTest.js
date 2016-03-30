@@ -3,7 +3,7 @@ var request = require('../../lib/RequestManager/manager.js');
 var generator = require('../../utils/generator.js');
 var config = require('../../config/config.json');
 
-describe("Public Key - Feature", function(){
+describe("Smoke: Public Key - Feature", function(){
     this.slow(config.timeSlow);
     this.timeout(config.timeOut);
 

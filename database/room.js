@@ -53,7 +53,7 @@ var findAllRoomsOfOneService = function(serviceId, callback){
 };
 
 /**
- * Update a room according the json params
+ * Add a resource to a room
  * @param {string} id - Room Id
  * @param {Object} resourceToInsert - Resource data in JSON structure
  * @param {function} callback - function for handle the object modified
@@ -74,9 +74,32 @@ var addResourceToRoom = function(id,resourceToInsert, callback){
                 jsonResource,
                 db, callback);
         });
+};
+/**
+ * Delete a specific resource by id from a room
+ * @param {string} id - Room Id
+ * @param {string} resourceId - Resource Id
+ * @param {function} callback - function for handle the object modified
+ */
+var removeResourceToRoom = function(id,resourceId, callback){
+    var jsonResource=
+    { $pull:     {
+        resources: {
+            "resourceId": resourceId
+        }
+    } };
+
+    mongoClient.connect(url, function(err, db) {
+        DBmanager.setTable(table);
+        DBmanager.update(ObjectId(id),
+            jsonResource,
+            db, callback);
+    });
 
 };
 exports.findRoom = findRoom;
 exports.findAllRooms = findAllRooms;
 exports.findAllRoomsOfOneService = findAllRoomsOfOneService;
 exports.addResourceToRoom = addResourceToRoom;
+exports.removeResourceToRoom = removeResourceToRoom;
+

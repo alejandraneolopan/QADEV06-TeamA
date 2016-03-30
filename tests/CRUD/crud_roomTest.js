@@ -1,10 +1,10 @@
 var expect = require('chai').expect;
 var request = require('../../lib/RequestManager/manager.js');
 var generator = require('../../utils/generator.js');
-var condition = require('../../lib/Conditions/condition.js');
+var dbQuery = require('../../lib/Conditions/dbQuery.js');
 var config = require('../../config/config.json');
 
-describe("CRUD ROOMS", function(){
+describe("CRUD: methods for API-Rooms", function(){
 
     this.slow(10000);
     this.timeout(10000);
@@ -12,7 +12,7 @@ describe("CRUD ROOMS", function(){
     var RoomsList;
     before(function(done){
         request.authentication.postLogin(function(err, res){
-            condition.preCondition
+            dbQuery.preCondition
                 .findAllRooms(function(res){
                     RoomsList=res;
                     RoomID = res[0]._id;
@@ -30,13 +30,13 @@ describe("CRUD ROOMS", function(){
     });
 
     it('CRUD - GET /rooms/{:roomId} returns a room', function(done){
-        request.room.getRoomID(RoomID, function(err, res){
+        request.room.getRoomById(RoomID, function(err, res){
             expect(res.body._id).to.equal(RoomID.toString());
             expect(res.body.customDisplayName).to.equal(RoomName);
             done();
         });
     });
-
+    
     it('CRUD - PUT /rooms api modify a specific room', function(done){
         var body = generator.generator_room.generateRoom();
         RoomName=body.customDisplayName;
