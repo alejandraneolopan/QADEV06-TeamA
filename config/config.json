@@ -1,7 +1,7 @@
 {
-  "username" :  "Lucero",
-  "password" :  "Control123!",
-  "rootURI" :  "https://172.20.208.66",
+  "username" :  "admin",
+  "password" :  "Nexo2010",
+  "rootURI" :  "https://172.20.208.146",
   "port" : "4040",
   "exchange" : {"username" : "Lucero",
                 "password" : "Control123!",

@@ -103,7 +103,7 @@ var update = function(id, setJson,db, callback){
 
         db.collection(table).update(
             {
-                "_id" : id
+                "_id" : ObjectId(id)
             },
             setJson
             , function (err, result) {
@@ -112,7 +112,7 @@ var update = function(id, setJson,db, callback){
 
     }
     catch (e) {
-        print(e);
+       console.log(e);
     }
 
 };

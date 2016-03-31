@@ -83,15 +83,16 @@ var addResourceToRoom = function(id,resourceToInsert, callback){
  */
 var removeResourceToRoom = function(id,resourceId, callback){
     var jsonResource=
-    { $pull:     {
-        resources: {
-            "resourceId": resourceId
+    {  "$pull":     {
+        "resources": {
+            "resourceId": resourceId.toString()
+
         }
     } };
 
     mongoClient.connect(url, function(err, db) {
         DBmanager.setTable(table);
-        DBmanager.update(ObjectId(id),
+        DBmanager.update(id,
             jsonResource,
             db, callback);
     });
