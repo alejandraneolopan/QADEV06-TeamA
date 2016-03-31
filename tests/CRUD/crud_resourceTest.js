@@ -4,7 +4,7 @@ var generator = require('../../utils/generator.js');
 var dbQuery = require('../../lib/Conditions/dbQuery.js');
 var config = require('../../config/config.json');
 
-describe('CRUD: methods for API-Resources', function(){
+describe('CRUD: methods for API-Resources ', function(){
 
     this.slow(config.timeSlow);
     this.timeout(config.timeOut);
