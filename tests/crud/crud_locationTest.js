@@ -1,10 +1,10 @@
 var expect = require('chai').expect;
 var request = require('../../lib/RequestManager/manager.js');
 var generator = require('../../utils/generator.js');
-var condition = require('../../lib/Conditions/condition.js');
+var dbQuery = require('../../lib/Conditions/dbQuery.js');
 var config = require('../../config/config.json');
 
-describe('CRUD methods for API-Locations', function(){
+describe('CRUD: methods for API-Locations', function(){
 
     this.slow(config.timeSlow);
     this.timeout(config.timeOut);
@@ -16,63 +16,80 @@ describe('CRUD methods for API-Locations', function(){
         });
     });
 
-    beforeEach(function(done){
-        var randomLocation = generator.generator_location.generateLocation();
-        condition.preCondition.insertLocation(randomLocation, function(result){
-                locationId = result._id;
-                done();
-            });
-    });
-
     afterEach(function(done){
         if (locationId !== undefined) {
-            condition.removeLocation( locationId, function(){
+            dbQuery.removeLocation( locationId, function(){
                 done();
             }); 
         };
     });
 
-    it('Location POST', function(done){
+    it('POST /Locations creates a new location', function(done){
         var randomLocation = generator.generator_location.generateLocation();
         request.location.postLocation(randomLocation, function(err, res){
             var actualResult = res.body;
-            condition.assertion.findLocation(res.body._id, function(result){
-                    expect(actualResult.customName).to.equal(result.customName);
-                    expect(actualResult.name).to.equal(result.name);
-                    expect(actualResult.fontIcon).to.equal(result.fontIcon);
-                    done();
-                });
+            locationId = res.body._id;
+            dbQuery.assertion.verifyLocationExist(res.body._id, function(result){
+                expect(result.customName).to.equal(actualResult.customName);
+                expect(result.name).to.equal(actualResult.name);
+                expect(result.fontIcon).to.equal(actualResult.fontIcon);
+                done();
+            });
         });
     });
 
-    it('Location GET', function(done){
-        request.location.getLocationById(locationId, function(err, res){
-            var actualResult = res.body;
-            condition.assertion.findLocation(res.body._id, function(result){
-                    expect(actualResult.customName).to.equal(result.customName);
-                    expect(actualResult.name).to.equal(result.name);
-                    expect(actualResult.fontIcon).to.equal(result.fontIcon);
-                    done();
-                });
-        }); 
-    });
+    describe('', function(){
 
-    it('Location GET-ALL', function(done){
-        request.location.getLocations(function(err, res){
-            var actualResult = res.body.length;
-            condition.assertion.findAllLocations(function(result){
-                    expect(actualResult).to.equal(result.length);
-                    done();
-                });
-        }); 
-    });
+        beforeEach(function(done){
+            var randomLocation = generator.generator_location.generateLocation();
+            dbQuery.preCondition.insertLocation(randomLocation, function(result){
+                locationId = result._id;
+                done();
+            });
+        });
 
-    it('Location DELETE',function(done){
-         request.location.delLocation(locationId, function(err,res){
-            condition.assertion.findLocation(res.body._id, function(result){
-                    expect(result).to.equal(undefined);
+        it('GET /Locations/{:Id} returns the location specified', function(done){
+            request.location.getLocationById(locationId, function(err, res){
+                var actualResult = res.body;
+                dbQuery.assertion.verifyLocationExist(res.body._id, function(result){
+                    expect(result.customName).to.equal(actualResult.customName);
+                    expect(result.name).to.equal(actualResult.name);
+                    expect(result.fontIcon).to.equal(actualResult.fontIcon);
                     done();
                 });
+            }); 
+        });
+
+        it('GET /Locations returns all locations', function(done){
+            request.location.getLocations(function(err, res){
+                var actualResult = res.body.length;
+                dbQuery.assertion.verifyAllLocations(function(result){
+                    expect(result.length).to.equal(actualResult);
+                    done();
+                });
+            }); 
+        });
+
+        it('PUT /Locations/{:id} modifies the location specified', function(done){
+            var randomLocation = generator.generator_location.generateLocation();
+            request.location.putLocation(locationId, randomLocation, function(err, res){
+                var actualResult = res.body;
+                dbQuery.assertion.verifyLocationExist(res.body._id, function(result){
+                    expect(result.customName).to.equal(actualResult.customName);
+                    expect(result.name).to.equal(actualResult.name);
+                    expect(result.fontIcon).to.equal(actualResult.fontIcon);
+                    done();
+                });
+            }); 
+        });
+
+        it('DELETE /Locations/{:Id} delete the location specified',function(done){
+            request.location.delLocation(locationId, function(err,res){
+            dbQuery.assertion.verifyLocationExist(res.body._id, function(result){
+                    expect(undefined).to.equal(result);
+                    done();
+                });
+            });
         });
     });
 });
