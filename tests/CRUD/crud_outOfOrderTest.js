@@ -26,7 +26,6 @@ describe("CRUD - Out of Orders Service", function(){
             //Creating a out-of-Order by DB  - without meeting -
             startDate = new Date(Date.now());
             dueDate = new Date(Date.now() + 900000);
-
             outOfOrderBody = generator.generator_outOfOrder.generateOutOfOrder(startDate, dueDate, room_ID);
             dbQuery.preCondition.insertOutOfOrder(outOfOrderBody,function(res){
                 //Updating the new object
@@ -79,5 +78,4 @@ describe("CRUD - Out of Orders Service", function(){
             done();
         });
     });
-
 });

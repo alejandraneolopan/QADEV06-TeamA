@@ -47,7 +47,6 @@ describe("CRUD - Room Resources Service", function(){
            /* Verify */
             var present, amountPresents = 0;
             expect(totalResources).to.equal(res.body.length);
-
             //All elements should be present
             res.body.forEach(function(element){
                 present = false;
@@ -96,7 +95,6 @@ describe("CRUD - Room Resources Service", function(){
         var found = false;
         request.resource.delResourceByRoom(room_ID, roomResourceId, function(err, res){
             var resourcesList = res.body.resources;
-            /*Verify that the resource is not inside of the Room*/
             resourcesList.forEach(function(elementResource){
                 if (elementResource._id == roomResourceId){
                     found=true;
@@ -113,7 +111,6 @@ describe("CRUD - Room Resources Service", function(){
         resourceJSON = generator.generator_resource.getResources();
         request.room.postRoomResource(room_ID2, resourceJSON, function(err, res){
             var resourcesList = res.body;
-            /*Verify that the resource is not inside of the Room*/
             resourcesList.forEach(function(elementResource){
                 if (elementResource.resourceId == roomResourceId){
                     found = true;
@@ -142,5 +139,4 @@ describe("CRUD - Room Resources Service", function(){
             done();
         });
     });
-
 });
