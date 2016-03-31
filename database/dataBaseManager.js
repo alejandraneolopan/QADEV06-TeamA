@@ -14,7 +14,16 @@ var insert = function (toInsert, db, callback) {
     db.collection(table).insert(
         toInsert
         , function (err, result) {
-        callback(result.ops[0]);
+            if (result.ops){
+                callback(result.ops[0]);
+            }
+            else
+            {
+                console.log('Error inserting data OPS');
+                console.log(err);
+                callback({});
+            }
+
         db.close();
     });
 };

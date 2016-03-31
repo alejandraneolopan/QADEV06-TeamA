@@ -3,6 +3,9 @@
   "password" :  "Control123!",
   "rootURI" :  "https://172.20.208.66",
   "port" : "4040",
+  "exchange" : {"username" : "Lucero",
+                "password" : "Control123!",
+                "hostname" : "qdv06lrc04001.cba.edu"},
   "typeAuthentication": {"jwt" : "jwt ",
                          "basic" : "Basic "},
 

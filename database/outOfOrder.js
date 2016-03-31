@@ -1,6 +1,6 @@
 /**
- * Location module
- * @module insertLocation, findLocation,removeLocation
+ * Out-Of-Orders module
+ * @module insertOutOfOrder, findOutOfOrderById,findOutOfOrderByIdByRoom,findAllOutOfOrders, removeOutOfOrder
  */
 var DBmanager = require('../database/dataBaseManager.js');
 var mongoClient = require('mongodb').MongoClient;
@@ -18,8 +18,7 @@ var url = dbConfig.url;
  */
 var table = dbConfig.tables.outoforders;
 
-
-var insertOutOfOrder = function(roomId,outOfOrderToInsert, callback){
+var insertOutOfOrder = function(outOfOrderToInsert, callback){
     mongoClient.connect(url, function(err, db) {
         DBmanager.setTable(table);
         DBmanager.insert(outOfOrderToInsert, db, callback);
@@ -51,14 +50,17 @@ var findAllOutOfOrdersByRoom = function(roomId,callback){
     });
 };
 
-var removeLocation = function(id, callback){
+var removeOutOfOrder = function(id, callback){
     mongoClient.connect(url, function(err, db) {
         DBmanager.setTable(table);
         DBmanager.remove(ObjectId(id), db, callback);
     });
 };
 
-exports.insertLocation = insertLocation;
-exports.findLocation = findLocation;
-exports.findAllLocations = findAllLocations;
-exports.removeLocation = removeLocation;
+exports.insertOutOfOrder = insertOutOfOrder;
+exports.findOutOfOrderById = findOutOfOrderById;
+exports.findOutOfOrderByIdByRoom = findOutOfOrderByIdByRoom;
+exports.findAllOutOfOrders = findAllOutOfOrders;
+exports.removeOutOfOrder = removeOutOfOrder;
+exports.findAllOutOfOrdersByRoom = findAllOutOfOrdersByRoom;
+
