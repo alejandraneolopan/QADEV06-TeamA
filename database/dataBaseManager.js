@@ -8,7 +8,7 @@ var table = '';
  * Create a new document in the database
  * @param {Object} toInsert - Object JSON data according table schema
  * @param {Object} db - Connection with MongoDB database
- * @param {function} callbacK - function for handle the new object
+ * @param {function} callback - function for handle the new object
  */
 var insert = function (toInsert, db, callback) {
     db.collection(table).insert(
@@ -31,7 +31,7 @@ var insert = function (toInsert, db, callback) {
  * Find a specific object by ID in the database
  * @param {Object} id - Object Id
  * @param {Object} db - Connection with MongoDB database
- * @param {function} callbacK - function for handle the object found
+ * @param {function} callback - function for handle the object found
  */
 var find = function (id, db, callback) {
     db.collection(table).find(
@@ -46,7 +46,7 @@ var find = function (id, db, callback) {
  * Find Objects by a JSON parameters in the database
  * @param {Object} paramJSON - Filters specified in JSON format { data : value,...}
  * @param {Object} db - Connection with MongoDB database
- * @param {function} callbacK - function for handle the object array found
+ * @param {function} callback - function for handle the object array found
  */
 var findByParameters = function (json, db, callback) {
     db.collection(table).find(
@@ -60,7 +60,7 @@ var findByParameters = function (json, db, callback) {
 /**
  * Find all objects in the table specified
  * @param {Object} db - Connection with MongoDB database
- * @param {function} callbacK - function for handle the object array found
+ * @param {function} callback - function for handle the object array found
  */
 var findAll = function (db, callback) {
     var collection = db.collection(table).find(
@@ -93,7 +93,7 @@ var remove = function (id, db, callback) {
                              resources: {
                              "quantity": resourceToInsert.quantity,
                              "resourceId": resourceToInsert._id.toString(),
-                                 "_id": ObjectId(resourceToInsert._id)
+                                 "_id": ObjectId(resourceToInsert._id.toString())
                              }
                          } };
  * @param {function} callback - function for handle the object deleted
@@ -103,16 +103,17 @@ var update = function(id, setJson,db, callback){
 
         db.collection(table).update(
             {
-                "_id" : id
+                "_id" : ObjectId(id)
             },
             setJson
             , function (err, result) {
+
                 callback();
             });
 
     }
     catch (e) {
-        print(e);
+
     }
 
 };

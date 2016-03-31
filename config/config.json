@@ -1,28 +1,26 @@
 {
   "roomManagerCredentials":{"username" :  "rodrigo",
-                            "password" :  "Control123!"},
+    "password" :  "Control123!"},
   "domainCredentials":{"username" :  "Rodrigo",
-                       "password" :  "Control123!"},
+    "password" :  "Control123!"},
   "rootURI" :  "https://172.20.208.229",
   "port" : "4040",
   "exchange" : {"username" : "Lucero",
-                "password" : "Control123!",
-                "hostname" : "qdv06lrc04001.cba.edu"},
+    "password" : "Control123!",
+    "hostname" : "qdv06lrc04001.cba.edu"},
   "typeAuthentication": {"jwt" : "jwt ",
-                         "basic" : "Basic"},
+    "basic" : "Basic"},
 
   "endPoints" : { "publicKey" : "/public-key",
-                  "login" : "/login",
-                  "serviceTypes" : "/service-types",
-                  "resources" : "/resources",
-                  "services" : "/services",
-                  "rooms" : "/rooms",
-                  "meetings" : "/meetings",
-                  "outOfOrders" : "/out-of-orders",
-                  "locations" : "/locations"
+    "login" : "/login",
+    "serviceTypes" : "/service-types",
+    "resources" : "/resources",
+    "services" : "/services",
+    "rooms" : "/rooms",
+    "meetings" : "/meetings",
+    "outOfOrders" : "/out-of-orders",
+    "locations" : "/locations"
   },
   "timeSlow": 10000,
   "timeOut": 10000
 }
-
-

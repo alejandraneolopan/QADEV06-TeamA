@@ -17,6 +17,8 @@ var generateResource = function(){
     resource.customName = generator.generateValues();
     resource.description = generator.generateValues();
     storeResources(resource);
+    if(resource.resourceId != "")
+    {resource.resourceId = "";}
     return resource;
 };
 exports.generateResource = generateResource;
