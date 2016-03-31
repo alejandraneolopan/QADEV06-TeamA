@@ -15,15 +15,7 @@ describe('CRUD: methods for API-Resources', function(){
         request.authentication.postLogin(function(err, res){
             done();
         });
-    });
-
-    beforeEach(function(done){
-        var randomResource = generator.generator_resource.generateResource();
-        dbQuery.preCondition.insertResource(randomResource, function(result){
-        resourceId = result._id;
-            done();
-        });
-    });
+    }); 
 
     afterEach(function(done){
         if (resourceId !== undefined) {
@@ -36,57 +28,69 @@ describe('CRUD: methods for API-Resources', function(){
     it('POST /Resources create a new resource', function(done){
         var randomResource = generator.generator_resource.generateResource();
         request.resource.postResource(randomResource, function(err, res){
-                var actualResult = res.body;
-                dbQuery.assertion.findResource(res.body._id, function(result){
-                        expect(actualResult.customName).to.equal(result.customName);
-                        expect(actualResult.name).to.equal(result.name);
-                        expect(actualResult.fontIcon).to.equal(result.fontIcon);
-                        done();
-                });
+            var actualResult = res.body;
+            resourceId = res.body._id;
+            dbQuery.assertion.findResource(res.body._id, function(result){
+                expect(result.customName).to.equal(actualResult.customName);
+                expect(result.name).to.equal(actualResult.name);
+                expect(result.fontIcon).to.equal(actualResult.fontIcon);
+                done();
+            });
         });
     });
 
-    it('GET /Resources/{:Id} returns the resource specified', function(done){
-        request.resource.getResourceById(resourceId, function(err, res){
+    describe('', function(){
+
+        beforeEach(function(done){
+            var randomResource = generator.generator_resource.generateResource();
+            dbQuery.preCondition.insertResource(randomResource, function(result){
+            resourceId = result._id;
+                done();
+            });
+        });
+
+        it('GET /Resources/{:Id} returns the resource specified', function(done){
+            request.resource.getResourceById(resourceId, function(err, res){
                 var actualResult = res.body;
                 dbQuery.assertion.findResource(res.body._id, function(result){
-                        expect(actualResult.customName).to.equal(result.customName);
-                        expect(actualResult.name).to.equal(result.name);
-                        expect(actualResult.fontIcon).to.equal(result.fontIcon);
-                        done();
+                    expect(result.customName).to.equal(actualResult.customName);
+                    expect(result.name).to.equal(actualResult.name);
+                    expect(result.fontIcon).to.equal(actualResult.fontIcon);
+                    done();
                 });
-        }); 
-    });
+            }); 
+        });
 
-    it('PUT /Resources/{:id} modifies the resource specified', function(done){
-        var randomResource = generator.generator_resource.generateResource();
-        request.resource.putResource(resourceId, randomResource, function(err, res){
-                var actualResult = res.body;
-                dbQuery.assertion.findResource(res.body._id, function(result){
-                        expect(actualResult.customName).to.equal(result.customName);
-                        expect(actualResult.name).to.equal(result.name);
-                        expect(actualResult.fontIcon).to.equal(result.fontIcon);
-                        done();
-                });
-        }); 
-    });
-
-    it('GET /Resources returns all resources', function(done){
-        request.resource.getResources(function(err, res){
+        it('GET /Resources returns all resources', function(done){
+            request.resource.getResources(function(err, res){
                 var actualResult = res.body.length;
                 dbQuery.assertion.findAllResources(function(result){
-                        expect(actualResult).to.equal(result.length);
-                        done();
-                 });
-        }); 
-    });
-
-    it('DELETE /Resources/{:Id} delete the resource specified',function(done){
-         request.resource.delResource(resourceId, function(err,res){
-                dbQuery.assertion.findResource(res.body._id, function(result){
-                       expect(result).to.equal(undefined);
-                       done();
+                    expect(result.length).to.equal(actualResult);
+                    done();
                 });
+            }); 
         });
-    });
+
+        it('PUT /Resources/{:id} modifies the resource specified', function(done){
+            var randomResource = generator.generator_resource.generateResource();
+            request.resource.putResource(resourceId, randomResource, function(err, res){
+                var actualResult = res.body;
+                dbQuery.assertion.findResource(res.body._id, function(result){
+                    expect(result.customName).to.equal(actualResult.customName);
+                    expect(result.name).to.equal(actualResult.name);
+                    expect(result.fontIcon).to.equal(actualResult.fontIcon);
+                    done();
+                });
+            }); 
+        });
+
+        it('DELETE /Resources/{:Id} delete the resource specified',function(done){
+             request.resource.delResource(resourceId, function(err,res){
+                dbQuery.assertion.findResource(res.body._id, function(result){
+                   expect(undefined).to.equal(result);
+                   done();
+                });
+            });
+        });
+    });  
 });
