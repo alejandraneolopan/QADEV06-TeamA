@@ -16,6 +16,15 @@ var generateValue = function(){
 };
 exports.generateValue = generateValue;
 
+var buildList = function(arrayList){
+    var value = [];
+    for( var i=0; i < arrayList.length; i++ ) {
+        value.push(arrayList[i]._id.toString());
+    }
+    return value;
+};
+exports.buildList = buildList;
+
 var generateCapacity = function(){
     var value = "";
     var possible = "0123456789";

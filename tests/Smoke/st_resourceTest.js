@@ -28,7 +28,10 @@ describe("Smoke: Resource - Feature", function(){
                     room_ID = res[0]._id;
                     dbQuery.preCondition.findAllServices(function(res){
                         serviceId = res[0]._id;
-                        done();
+                        dbQuery.preCondition.findAllResources(function(res){
+                            listResources = res;
+                            done();
+                        });
                     });
                 });
         });
@@ -66,6 +69,15 @@ describe("Smoke: Resource - Feature", function(){
          });
      });
 
+    it('POST /rooms/{:roomId}/resources, returns 404 status code when a non-existent roomId is used.', function(done){
+        var nonExistentRoomId = generator.generateValues();
+        var resourceBody = generator.generator_resource.generateResource();
+        request.resource.postResourceByRoomId(resourceBody, nonExistentRoomId, function(err, res){
+            expect(res.status).to.equal(404);
+            done();
+        });
+    });
+
      it('GET /rooms/{:roomId}/resources, returns status code 200', function(done){
          request.resource.getResourcesByRoom(room_ID, function(err, res){
              expect(res.status).to.equal(200);
@@ -75,9 +87,6 @@ describe("Smoke: Resource - Feature", function(){
 
     it('GET /resources, returns status code 200', function(done){
         request.resource.getResources(function(err, res){
-            for(var i = 0; i <= res.body.length; i++){
-                listResources.push(res.body[i]);
-            }
             expect(res.status).to.equal(200);
             done();
         });
@@ -122,6 +131,15 @@ describe("Smoke: Resource - Feature", function(){
 
     it('DEL /resources/{:id}, returns status code 200', function(done){
         request.resource.delResource(resourceId, function(err, res){
+            expect(res.status).to.equal(200);
+            done();
+        });
+    });
+
+    it('DEL /resources, returns status code 200', function(done){
+        listResources = generator.buildList(listResources);
+        var body = {"id": listResources };
+        request.resource.delResources(body, function(err, res){
             expect(res.status).to.equal(200);
             done();
         });

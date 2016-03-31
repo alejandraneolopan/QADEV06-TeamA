@@ -32,12 +32,20 @@ describe("Smoke: Locations  - Feature", function(){
         }
     });
 
-    it('POST /Locations creates a new location', function(done){
+    it('POST /locations, returns status code 200', function(done){
         bodyLocation = generator.generator_location.generateLocation();
         request.location.postLocation(bodyLocation, function(err, res){
                 expect(res.status).to.equal(200);
                 done();
             });
+    });
+
+    it('POST /locations, returns status code 401 when an incorrect authorization is used', function(done){
+        bodyLocation = generator.generator_location.generateLocation();
+        request.location.postLocationIncorrectAuthorization(bodyLocation, function(err, res){
+            expect(res.status).to.equal(401);
+            done();
+        });
     });
 
     it('GET /locations, returns status code 200', function(done){

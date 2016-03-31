@@ -32,6 +32,14 @@ describe("Smoke: Rooms - Feature", function(){
         });
      });
 
+    it('GET /rooms/{:roomId}, returns 404 status code when non-existent roomId is used', function(done){
+        var nonExistentRoomId = generator.generateValues();
+        request.room.getRoomById(nonExistentRoomId, function(err, res){
+            expect(res.status).to.equal(404);
+            done();
+        });
+    });
+
     it('GET /rooms/{:roomId}, returns status code 200', function(done){
         request.room.getRoomById(roomId, function(err, res){
             expect(res.status).to.equal(200);
@@ -61,6 +69,23 @@ describe("Smoke: Rooms - Feature", function(){
         });
     });
 
+    it('PUT /rooms/{:roomId}, returns 404 status code when non-existent roomId is used', function(done){
+        var body = generator.generator_room.generateRoom();
+        var nonExistentRoomId = generator.generateValues();
+        request.room.putRoom(nonExistentRoomId, body, function(err, res){
+            expect(res.status).to.equal(404);
+            done();
+        });
+    });
+
+    it('PUT /rooms/{:roomId}, returns status code 401 when an incorrect authorization is used', function(done){
+        var body = generator.generator_room.generateRoom();
+        request.room.putRoomIncorrectAuthorization(roomId, body, function(err, res){
+            expect(res.status).to.equal(401);
+            done();
+        });
+    });
+
     it('PUT /services/{:serviceId}/rooms/{:roomId}, returns status code 200', function(done){
         var body = generator.generator_room.generateRoom();
         request.room.putRoomByService(serviceId, roomId, body, function(err, res){
@@ -68,4 +93,6 @@ describe("Smoke: Rooms - Feature", function(){
             done();
         });
     });
+
+
 });
