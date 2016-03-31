@@ -1,5 +1,5 @@
 {
-  "url":"mongodb://172.20.208.146:27017/roommanager",
+  "url":"mongodb://172.20.208.229:27017/roommanager",
   "tables":
   {
 	"location":"locations",
