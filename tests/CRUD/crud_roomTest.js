@@ -4,7 +4,7 @@ var generator = require('../../utils/generator.js');
 var dbQuery = require('../../lib/Conditions/dbQuery.js');
 var config = require('../../config/config.json');
 
-describe("CRUD: methods for API-Rooms", function(){
+describe("CRUD: methods for API-Room", function(){
 
     this.slow(10000);
     this.timeout(10000);
