@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
 	"url":"mongodb://172.20.208.61:27017/roommanager",
+=======
+	"url":"mongodb://172.20.208.229:27017/roommanager",
+>>>>>>> 3b5f566c50e2351308970c858d9617e6934e94dc
 	"tables":
 	{
 		"location":"locations",

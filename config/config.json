@@ -1,13 +1,21 @@
 {
+<<<<<<< HEAD
   "username" :  "ArielYanarico",
   "password" :  "A123456a",
   "rootURI" :  "https://172.20.208.61",
+=======
+  "roomManagerCredentials":{"username" :  "rodrigo",
+                            "password" :  "Control123!"},
+  "domainCredentials":{"username" :  "Rodrigo",
+                       "password" :  "Control123!"},
+  "rootURI" :  "https://172.20.208.229",
+>>>>>>> 3b5f566c50e2351308970c858d9617e6934e94dc
   "port" : "4040",
   "exchange" : {"username" : "Lucero",
                 "password" : "Control123!",
                 "hostname" : "qdv06lrc04001.cba.edu"},
   "typeAuthentication": {"jwt" : "jwt ",
-                         "basic" : "Basic "},
+                         "basic" : "Basic"},
 
   "endPoints" : { "publicKey" : "/public-key",
                   "login" : "/login",

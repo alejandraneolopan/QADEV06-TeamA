@@ -50,6 +50,29 @@ describe("Smoke: Resource - Feature", function(){
         });
     });
 
+    it('POST /services/{:serviceId}/rooms/{:roomId}/resources, returns status code 200', function(done){
+        var body = generator.generator_resource.generateResource();
+        request.resource.postResourceByRoomOfService(body, serviceId, room_ID, function(err, res){
+            expect(res.status).to.equal(200);
+            done();
+        });
+    });
+
+    it('POST /rooms/{:roomId}/resources, returns status code 200', function(done){
+         var resourceBody = generator.generator_resource.generateResource();
+         request.resource.postResourceByRoomId(resourceBody, room_ID, function(err, res){
+             expect(res.status).to.equal(200);
+             done();
+         });
+     });
+
+     it('GET /rooms/{:roomId}/resources, returns status code 200', function(done){
+         request.resource.getResourcesByRoom(room_ID, function(err, res){
+             expect(res.status).to.equal(200);
+             done();
+         });
+     });
+
     it('GET /resources, returns status code 200', function(done){
         request.resource.getResources(function(err, res){
             for(var i = 0; i <= res.body.length; i++){
