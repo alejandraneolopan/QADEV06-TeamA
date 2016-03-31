@@ -107,12 +107,13 @@ var update = function(id, setJson,db, callback){
             },
             setJson
             , function (err, result) {
+
                 callback();
             });
 
     }
     catch (e) {
-       console.log(e);
+
     }
 
 };

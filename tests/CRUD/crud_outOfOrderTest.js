@@ -1,6 +1,4 @@
 var expect = require('chai').expect;
-var ISODate = require('isodate');
-var ObjectId = require('mongodb').ObjectID;
 var request = require('../../lib/RequestManager/manager.js');
 var generator = require('../../utils/generator.js');
 var dbQuery = require('../../lib/Conditions/dbQuery.js');
@@ -12,7 +10,7 @@ describe("CRUD - Out of Orders Service", function(){
     this.timeout(config.timeOut);
     var room_ID = null;
     var outOfOrderId= null, totalOutOfOrders = 0;
-
+    var outOfOrderBody=null;
 
     before(function(done){
         request.authentication.postLogin(function(err, res){
@@ -21,32 +19,20 @@ describe("CRUD - Out of Orders Service", function(){
     });
 
     beforeEach(function(done){
-
+        var startDate,dueDate;
+        //Find a room
         dbQuery.preCondition.findAllRooms(function(res){
             room_ID = res[0]._id;
-            var mydate=Date.now()+3600000;
-            var dueDate=new Date(mydate);
-            var startDate=new Date(Date.now());
-            dueDate = convertTime(dueDate);
-            startDate = convertTime(startDate);
-            console.log(startDate,dueDate);
-            var timeNow=ISODate("2016-03-31T09:33:00.000Z").toISOString();
-            var datetime=ISODate(dueDate).toISOString();
-           // datetime2= datetime2.toLocaleDateString();
-            console.log(timeNow,datetime);
-            var outOfOrderBody =
-            {
-                "from" : ISODate("2016-03-30T19:00:00.000Z"),//change and formating
-                "to" : ISODate("2016-03-30T19:30:00.000Z"),
-                "roomId" : ObjectId(room_ID),
-                "title" : "Temporarily Out of Order",
-                "description" : "test1",
-                "sendEmail" : true,
-                "__v" : 0
-            };
-            dbQuery.preCondition.insertOutOfOrder(outOfOrderBody,function(res){
-                outOfOrderId = res._id;
+            //Creating a out-of-Order by DB  - without meeting -
+            startDate=new Date(Date.now());
+            dueDate=new Date(Date.now()+900000);
 
+            outOfOrderBody = generator.generator_outOfOrder.generateOutOfOrder(startDate,dueDate, room_ID);
+            dbQuery.preCondition.insertOutOfOrder(outOfOrderBody,function(res){
+                //Updating the new object
+                outOfOrderId = res._id;
+                generator.generator_outOfOrder.updateId(outOfOrderId);
+                outOfOrderBody = generator.generator_outOfOrder.outOfOrder;
                 done();
             });
         });
@@ -60,21 +46,55 @@ describe("CRUD - Out of Orders Service", function(){
 
 
     });
+    it('GET /out-of-orders/{:out-of-orderId} returns one specific out of order', function(done){
+
+        expect(outOfOrderId).not.to.equal(null);
+        done();
+
+
+    });
+    it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders returns all out of orders by specific Room and Service', function(done){
+
+        expect(outOfOrderId).not.to.equal(null);
+        done();
+
+
+    });
+    it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders/{:outOfOrderId} returns one out of order by specific Room and Service', function(done){
+
+        expect(outOfOrderId).not.to.equal(null);
+        done();
+
+
+    });
+    it('POST /services/{:serviceId}/rooms/{:roomId}/out-of-orders creates one out of order on one specific Room and Service', function(done){
+
+        expect(outOfOrderId).not.to.equal(null);
+        done();
+
+
+    });
+    it('PUT /services/{:serviceId}/rooms/{:roomId}/out-of-orders/{:outOfOrderId} updates one out of order by specific Room and Service', function(done){
+
+        expect(outOfOrderId).not.to.equal(null);
+        done();
+
+
+    });
+    it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders/{:outOfOrderId} deletes one out of order by specific Room and Service', function(done){
+
+        expect(outOfOrderId).not.to.equal(null);
+        done();
+
+
+    });
+
+    afterEach(function(done){
+        dbQuery.postCondition.removeOutOfOrder(outOfOrderId,function(res){
+            done();
+        });
+
+    });
+
 
 });
-var convertTime=  function(someDate)
-{ var dd = someDate.getDate();
-    var mm = someDate.getMonth() + 1;
-    var y = someDate.getFullYear();
-    var h=someDate.getHours();
-    var m=someDate.getMinutes();
-    var s=someDate.getSeconds();
-    var mmm=someDate.getMilliseconds();
-
-    if(dd<10){dd = '0' + dd;}
-    if(mm<10){mm = '0' + mm;}
-    if(h<10){h = '0' + h;}
-    if(m<10){m = '0' + m;}
-    var finalDate =y + '-'+ mm + '-'+ dd + 'T' + h + ':' + m  + ':' + s + '.' + mmm + 'Z';
-    return finalDate;
-};
