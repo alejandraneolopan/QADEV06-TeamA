@@ -27,8 +27,6 @@ describe("CRUD - Attendees Service", function(){
         var filter = 'ro';
         request.services.getAttendeesByService(serviceId, filter, function(err, res){
             var resourcesList = res.body;
-            console.log(res.body);
-            dbQuery.postCondition
             done();
         });
     });
