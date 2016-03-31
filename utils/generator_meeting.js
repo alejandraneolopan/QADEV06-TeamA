@@ -6,7 +6,7 @@ var start = new Date();
 var end = new Date (Date.now() + 3600000);
 var email =  config.exchange.hostname.replace(config.exchange.hostname.split('.')[0]+".", "@")  ;
 var meeting = {
-  "organizer": "user",
+  "organizer": "User",
   "title": "meetingTitle",
   "start": "2015-03-05T23:00:00.000Z",
   "end": "2015-03-05T23:30:00.000Z",
@@ -16,7 +16,7 @@ var meeting = {
     "room102@myexchange.com"
   ],
   "attendees": [
-    "user@myexchange.com"
+    "User@myexchange.com"
   ]
 }
 ;

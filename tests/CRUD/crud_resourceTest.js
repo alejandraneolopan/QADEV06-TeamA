@@ -4,7 +4,7 @@ var generator = require('../../utils/generator.js');
 var dbQuery = require('../../lib/Conditions/dbQuery.js');
 var config = require('../../config/config.json');
 
-describe('CRUD: methods for API-Resources ', function(){
+describe('CRUD: methods for API-Resources', function(){
 
     this.slow(config.timeSlow);
     this.timeout(config.timeOut);
@@ -25,7 +25,7 @@ describe('CRUD: methods for API-Resources ', function(){
         }
     });
 
-    it('POST /Resources create a new resource', function(done){
+    it('POST /resources create a new resource', function(done){
         var randomResource = generator.generator_resource.generateResource();
         request.resource.postResource(randomResource, function(err, res){
             var actualResult = res.body;
@@ -49,7 +49,7 @@ describe('CRUD: methods for API-Resources ', function(){
             });
         });
 
-        it('GET /Resources/{:Id} returns the resource specified', function(done){
+        it('GET /resources/{:Id} returns the resource specified', function(done){
             request.resource.getResourceById(resourceId, function(err, res){
                 var actualResult = res.body;
                 dbQuery.assertion.findResource(res.body._id, function(result){
@@ -61,7 +61,7 @@ describe('CRUD: methods for API-Resources ', function(){
             }); 
         });
 
-        it('GET /Resources returns all resources', function(done){
+        it('GET /resources returns all resources', function(done){
             request.resource.getResources(function(err, res){
                 var actualResult = res.body.length;
                 dbQuery.assertion.findAllResources(function(result){
@@ -71,7 +71,7 @@ describe('CRUD: methods for API-Resources ', function(){
             }); 
         });
 
-        it('PUT /Resources/{:id} modifies the resource specified', function(done){
+        it('PUT /resources/{:id} modifies the resource specified', function(done){
             var randomResource = generator.generator_resource.generateResource();
             request.resource.putResource(resourceId, randomResource, function(err, res){
                 var actualResult = res.body;
@@ -84,7 +84,7 @@ describe('CRUD: methods for API-Resources ', function(){
             }); 
         });
 
-        it('DELETE /Resources/{:Id} delete the resource specified',function(done){
+        it('DELETE /resources/{:Id} delete the resource specified',function(done){
              request.resource.delResource(resourceId, function(err,res){
                 dbQuery.assertion.findResource(res.body._id, function(result){
                    expect(undefined).to.equal(result);

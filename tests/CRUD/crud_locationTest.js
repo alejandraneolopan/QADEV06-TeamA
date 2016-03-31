@@ -24,7 +24,7 @@ describe('CRUD: methods for API-Locations', function(){
         };
     });
 
-    it('POST /Locations creates a new location', function(done){
+    it('POST /locations creates a new location', function(done){
         var randomLocation = generator.generator_location.generateLocation();
         request.location.postLocation(randomLocation, function(err, res){
             var actualResult = res.body;
@@ -48,7 +48,7 @@ describe('CRUD: methods for API-Locations', function(){
             });
         });
 
-        it('GET /Locations/{:Id} returns the location specified', function(done){
+        it('GET /locations/{:Id} returns the location specified', function(done){
             request.location.getLocationById(locationId, function(err, res){
                 var actualResult = res.body;
                 dbQuery.assertion.verifyLocationExist(res.body._id, function(result){
@@ -60,7 +60,7 @@ describe('CRUD: methods for API-Locations', function(){
             }); 
         });
 
-        it('GET /Locations returns all locations', function(done){
+        it('GET /locations returns all locations', function(done){
             request.location.getLocations(function(err, res){
                 var actualResult = res.body.length;
                 dbQuery.assertion.verifyAllLocations(function(result){
@@ -70,7 +70,7 @@ describe('CRUD: methods for API-Locations', function(){
             }); 
         });
 
-        it('PUT /Locations/{:id} modifies the location specified', function(done){
+        it('PUT /locations/{:id} modifies the location specified', function(done){
             var randomLocation = generator.generator_location.generateLocation();
             request.location.putLocation(locationId, randomLocation, function(err, res){
                 var actualResult = res.body;
@@ -83,7 +83,7 @@ describe('CRUD: methods for API-Locations', function(){
             }); 
         });
 
-        it('DELETE /Locations/{:Id} delete the location specified',function(done){
+        it('DELETE /locations/{:Id} delete the location specified',function(done){
             request.location.delLocation(locationId, function(err,res){
             dbQuery.assertion.verifyLocationExist(res.body._id, function(result){
                     expect(undefined).to.equal(result);
