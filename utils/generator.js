@@ -8,6 +8,14 @@ var generateValues = function(){
 };
 exports.generateValues = generateValues;
 
+var generateValue = function(){
+    var value = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz";
+    value += possible.charAt(Math.floor(Math.random() * possible.length));
+    return value;
+};
+exports.generateValue = generateValue;
+
 var generateCapacity = function(){
     var value = "";
     var possible = "0123456789";
