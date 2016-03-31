@@ -8,18 +8,17 @@ describe("CRUD - Room Resources Service", function(){
 
     this.slow(config.timeSlow);
     this.timeout(config.timeOut);
-    var room_ID = null, room_ID2=null;
-    var roomResourceId= null, totalResources = 0;
-    var resourceBody;
-    var resourceList;
-    var resourceIdForPost= null,resourceJSON= null;
+    var room_ID = null, room_ID2 = null;
+    var roomResourceId = null, totalResources = 0;
+    var resourceBody = null;
+    var resourceList = null;
+    var resourceJSON = null;
 
     before(function(done){
         request.authentication.postLogin(function(err, res){
             done();
         });
     });
-
 
     beforeEach(function(done){
         /*Create a resource*/
@@ -46,61 +45,57 @@ describe("CRUD - Room Resources Service", function(){
     it('GET /rooms/{:roomId}/resources returns all room\'s resources by room Id', function(done){
         request.resource.getResourcesByRoom(room_ID, function(err, res){
            /* Verify */
-            var present, amountPresents=0;
-            //Total elements
+            var present, amountPresents = 0;
             expect(totalResources).to.equal(res.body.length);
+
             //All elements should be present
             res.body.forEach(function(element){
                 present = false;
                 resourceList.forEach(function(dbElement){
-                    if (element.resourceId == dbElement.resourceId && element.quantity == dbElement.quantity)
-                    {
+                    if (element.resourceId == dbElement.resourceId && element.quantity == dbElement.quantity){
                         present = true;
                     }
                 });
-                if (present)
-                {amountPresents ++;}
+                if (present){
+                    amountPresents ++;
+                }
                 expect(totalResources).to.equal(amountPresents);
             });
-
             done();
         });
     });
-
 
     it('GET /rooms/{:roomId}/resources/{:roomResourceId} returns a specific resource from a specific room', function(done){
-        var expectedResourceObject = generator.generator_resource.resource;
-        request.resource.getResourceByRoomId(room_ID,roomResourceId, function(err, res){
-            expect(res.body._id).to.equal(roomResourceId.toString());
-            //expect(res.body).to.eql(expectedResourceObject);
+      request.resource.getResourceByRoomId(room_ID,roomResourceId, function(err, res){
+            expect(resourceBody.resourceId == res.body.resourceId).to.equal(true);
+            expect(resourceBody.quantity == res.body.quantity).to.equal(true);
             done();
         });
-
     });
+
     it('PUT /rooms/{:roomId}/resources/{:roomResourceId} updates a specific resource from a specific room', function(done){
         var quantity = generator.generateCapacity();
         var bodyJSON = {"quantity": quantity};
-        var found=false;
+        var found = false;
 
         request.resource.putResourceByRoom(room_ID, roomResourceId, bodyJSON, function(err, res){
-            var resourcesList=res.body.resources;
+            var resourcesList = res.body.resources;
             /*Verify that the resource is inside of Room*/
             resourcesList.forEach(function(elementResource){
                 if (elementResource._id == roomResourceId){
-                    found=true;
+                    found = true;
                     expect(elementResource.quantity).to.equal(parseInt(quantity));
                 }
             });
             expect(found).to.equal(true);
-
             done();
         });
     });
 
     it('DEL /rooms/{:roomId}/resources/{:roomResourceId} removes a specific resource from a specific room', function(done){
-        var found=false;
+        var found = false;
         request.resource.delResourceByRoom(room_ID, roomResourceId, function(err, res){
-            var resourcesList=res.body.resources;
+            var resourcesList = res.body.resources;
             /*Verify that the resource is not inside of the Room*/
             resourcesList.forEach(function(elementResource){
                 if (elementResource._id == roomResourceId){
@@ -113,15 +108,15 @@ describe("CRUD - Room Resources Service", function(){
     });
 
     it('POST /rooms/{:roomId}/resources associates a resource to a room', function(done){
-        var found=false;
+        var found = false;
         generator.generator_resource.setPropertiesResource(roomResourceId);
         resourceJSON = generator.generator_resource.getResources();
         request.room.postRoomResource(room_ID2, resourceJSON, function(err, res){
-            var resourcesList=res.body;
+            var resourcesList = res.body;
             /*Verify that the resource is not inside of the Room*/
             resourcesList.forEach(function(elementResource){
                 if (elementResource.resourceId == roomResourceId){
-                    found=true;
+                    found = true;
                 }
             });
             expect(found).to.equal(true);
@@ -131,27 +126,21 @@ describe("CRUD - Room Resources Service", function(){
     });
 
     afterEach(function(done){
-
         if(roomResourceId) {
             dbQuery.postCondition.removeResourceToRoom(room_ID, roomResourceId, function (re) {
-
                 dbQuery.postCondition.removeResource(roomResourceId, function (res) {
                     done();
                 });
             });
         }
-        else
-        {done();}
+        else{
+            done();
+        }
     });
     after(function(done){
-
         dbQuery.postCondition.removeResourceToRoom(room_ID2, roomResourceId, function (err,res) {
-
-            //dbQuery.postCondition.removeResource(roomResourceIdForPost, function (res) {
             done();
-            //});
         });
     });
-
 
 });

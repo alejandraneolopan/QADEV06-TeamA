@@ -17,7 +17,11 @@ var url = dbConfig.url;
  * @type {string}
  */
 var table = dbConfig.tables.outoforders;
-
+/**
+ * Insert by DB one out of order
+ * @param {JSON} outOfOrderToInsert - Out of order structure
+ * @param {function} callback - Script to manage the out-of-order object inserted
+ */
 var insertOutOfOrder = function(outOfOrderToInsert, callback){
     mongoClient.connect(url, function(err, db) {
         DBmanager.setTable(table);
@@ -49,7 +53,11 @@ var findAllOutOfOrdersByRoom = function(roomId,callback){
         DBmanager.findAll(db, callback);
     });
 };
-
+/**
+ * Deletes by DB one out of order
+ * @param {String} id - Out of order id
+ * @param {function} callback - Script to manage the out-of-order object deleted
+ */
 var removeOutOfOrder = function(id, callback){
     mongoClient.connect(url, function(err, db) {
         DBmanager.setTable(table);
