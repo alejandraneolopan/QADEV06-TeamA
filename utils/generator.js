@@ -16,6 +16,15 @@ var generateValue = function(){
 };
 exports.generateValue = generateValue;
 
+var buildList = function(arrayList){
+    var value = [];
+    for( var i=0; i < arrayList.length; i++ ) {
+        value.push(arrayList[i]._id.toString());
+    }
+    return value;
+};
+exports.buildList = buildList;
+
 var generateCapacity = function(){
     var value = "";
     var possible = "0123456789";
@@ -37,3 +46,6 @@ exports.generator_location = generator_location;
 
 var generator_service = require('../utils/generator_service.js');
 exports.generator_service = generator_service;
+
+var generator_outOfOrder = require('../utils/generator_outOfOrder.js');
+exports.generator_outOfOrder = generator_outOfOrder;
