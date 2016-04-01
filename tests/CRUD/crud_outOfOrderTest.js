@@ -88,7 +88,7 @@ describe("CRUD - Out of Orders Service", function(){
     it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders returns all out of orders by specific Room and Service', function(done){
         request.outOfOrders.getOutOfOrderByRoom(serviceId, room_ID, function(err, res){
             var actualResult = res.body;
-            dbQuery.assertion.findAllOutOfOrders(function(resultExpected){//TODO
+            dbQuery.assertion.findAllOutOfOrdersByRoom(room_ID,function(resultExpected){//TODO
                 var totalPresents = 0, present;
 
                 actualResult.forEach(function(element){
@@ -114,7 +114,7 @@ describe("CRUD - Out of Orders Service", function(){
     });
 
     it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders/{:outOfOrderId} returns one out of order by specific Room and Service', function(done){
-        request.outOfOrders.getOutOfOrderByRoom(outOfOrderId, function(err, res){
+        request.outOfOrders.getOutOfOrderByRoom(serviceId, room_ID, outOfOrderId, function(err, res){
             var actualResult = res.body;
             dbQuery.assertion.findOutOfOrderById(outOfOrderId,function(resultExpected){
                 var from = new Date(resultExpected.from);
@@ -144,7 +144,7 @@ describe("CRUD - Out of Orders Service", function(){
         done();
     });
 
-    it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders/{:outOfOrderId} deletes one out of order by specific Room and Service', function(done){
+    it('DEL /services/{:serviceId}/rooms/{:roomId}/out-of-orders/{:outOfOrderId} deletes one out of order by specific Room and Service', function(done){
         //TODO
         expect(outOfOrderId).not.to.equal(null);
         done();
