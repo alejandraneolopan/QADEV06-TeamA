@@ -3,7 +3,7 @@ var config = require('../config/config.json');
 
 
 var start = new Date();
-var end = new Date (Date.now() + 3600000);
+var end = new Date (Date.now() + 60000);
 var email =  config.exchange.hostname.replace(config.exchange.hostname.split('.')[0]+".", "@")  ;
 var meeting = {
   "organizer": "User",
