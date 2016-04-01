@@ -1,5 +1,8 @@
 var ObjectId = require('mongodb').ObjectID;
 var generator = require('../utils/generator.js');
+
+var start = new Date();
+var end = new Date (Date.now() + 60000);
 /**
  * Out-Of-Order structure for manage in request
  * @type {JSON}
@@ -21,9 +24,9 @@ var outOfOrder =
  * @param {String} roomId - specific Room
  * @return {JSON} outOfOrder - JSON structure
  */
-var generateOutOfOrder = function(startDate,dueDate, roomId){
-    outOfOrder.from = startDate.toISOString() ;
-    outOfOrder.to = dueDate.toISOString();
+var generateOutOfOrder = function(roomId){
+    outOfOrder.from = start.toISOString() ;
+    outOfOrder.to = end.toISOString();
     outOfOrder.roomId = ObjectId(roomId);
     outOfOrder.title = generator.generateValues();
     outOfOrder.description = generator.generateValues();

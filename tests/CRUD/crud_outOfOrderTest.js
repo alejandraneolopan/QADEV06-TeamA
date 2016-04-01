@@ -19,14 +19,11 @@ describe("CRUD - Out of Orders Service", function(){
     });
 
     beforeEach(function(done){
-        var startDate,dueDate;
         //Find a room
         dbQuery.preCondition.findAllRooms(function(res){
             room_ID = res[0]._id;
             //Creating a out-of-Order by DB  - without meeting -
-            startDate = new Date(Date.now());
-            dueDate = new Date(Date.now() + 900000);
-            outOfOrderBody = generator.generator_outOfOrder.generateOutOfOrder(startDate, dueDate, room_ID);
+            outOfOrderBody = generator.generator_outOfOrder.generateOutOfOrder(room_ID);
             dbQuery.preCondition.insertOutOfOrder(outOfOrderBody,function(res){
                 //Updating the new object
                 outOfOrderId = res._id;
