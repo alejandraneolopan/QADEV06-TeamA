@@ -5,7 +5,7 @@
     "password" :  "Control123!"},
   "rootURI" :  "https://172.20.208.229",
   "port" : "4040",
-  "exchange" : {"username" : "Lucero",
+  "exchange" : {"username" : "Rodrigo",
     "password" : "Control123!",
     "hostname" : "qdv06lrc04001.cba.edu"},
   "typeAuthentication": {"jwt" : "jwt ",
