@@ -33,6 +33,13 @@ var findAllMeetings = function(callback){
     });
 };
 
+var findAllMeetingsOfOneRoom = function(roomId, callback){
+	mongoClient.connect(url, function(err, db) {
+		DBmanager.setTable(table);
+		DBmanager.findByParameters({"roomId":""+roomId}, db, callback);
+    });
+};
+
 var removeMeeting = function(id, callback){
 	mongoClient.connect(url, function(err, db) {
 		DBmanager.setTable(table);
@@ -40,6 +47,7 @@ var removeMeeting = function(id, callback){
     });
 };
 
+exports.findAllMeetingsOfOneRoom = findAllMeetingsOfOneRoom;
 exports.findMeeting = findMeeting;
 exports.findAllMeetings = findAllMeetings;
 exports.removeMeeting = removeMeeting;
