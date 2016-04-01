@@ -6,6 +6,7 @@
 	"resource":"resourcemodels",
 	"service":"services",
 	"room":"rooms",
-	"outoforders":"outoforders"
+	"outoforders":"outoforders",
+	"attendees":"serviceaccounts"
   }
 }

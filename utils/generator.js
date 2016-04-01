@@ -49,3 +49,6 @@ exports.generator_service = generator_service;
 
 var generator_outOfOrder = require('../utils/generator_outOfOrder.js');
 exports.generator_outOfOrder = generator_outOfOrder;
+
+var generator_meeting = require('../utils/generator_meeting.js');
+exports.generator_meeting = generator_meeting;

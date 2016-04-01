@@ -17,18 +17,20 @@ var meeting = {
   ],
   "attendees": [
     "User@myexchange.com"
-  ]
+  ],
+  "optionalAttendees":["User@myexchange.com"]
 }
 ;
 var generateMeeting = function(room){
-    meeting.organizer = config.exchange.username;
+    meeting.organizer = config.domainCredentials.username;
     meeting.title = generator.generateValues();
     meeting.start = start.toISOString();
     meeting.end = end.toISOString();
     meeting.location = room.displayName;
     meeting.roomEmail = room.emailAddress;
     meeting.resources = [room.emailAddress];
-    meeting.attendees = [config.exchange.username + email];
+    meeting.attendees = [config.domainCredentials.username + email];
+    meeting.optionalAttendees = [config.domainCredentials.username + email];
 
     return meeting;
 };
