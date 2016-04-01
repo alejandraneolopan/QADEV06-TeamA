@@ -21,9 +21,9 @@ var table = dbConfig.tables.attendees;
  * @param {function} callback - function for handle the array
  */
 var findAttendeesByService = function(id,filter,callback){
-    var filter = new RegExp(filter);
+    filter = new RegExp(filter,'i');
     filterJSON = {
-        "name": filter,
+        "name": { $regex: filter },
         "serviceId" : ObjectId(id)
     };
     mongoClient.connect(url, function(err, db) {

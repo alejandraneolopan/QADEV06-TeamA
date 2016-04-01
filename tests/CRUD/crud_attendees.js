@@ -29,7 +29,21 @@ describe("CRUD - Attendees Service", function(){
             var accountListActual = res.body;
             dbQuery.postCondition.findAttendeesByService(serviceId,filter,function(res){
                 var accountListExpected = res;
-                expect(accountListActual.length).to.eql(accountListExpected.length);
+                var present, totalPresent = 0;
+                accountListActual.forEach(function(accountActual)
+                {
+                    present = false;
+                    accountListExpected.forEach(function(accountExpected){
+                        if (accountExpected.dn == accountActual.dn){
+                            present = true;
+                        }
+                    });
+                    if (present){
+                        totalPresent ++;
+                    }
+                });
+                expect(totalPresent).to.equal(accountListExpected.length);
+                expect(accountListActual.length).to.equal(accountListExpected.length);
                 done();
             });
         });
