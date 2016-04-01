@@ -35,8 +35,3 @@ var generateMeeting = function(room){
     return meeting;
 };
 exports.generateMeeting = generateMeeting;
-
-var setParentId = function(bodyMeeting, parentID){
-    return bodyMeeting.parentId = parentID;
-};
-exports.setParentId = setParentId;
