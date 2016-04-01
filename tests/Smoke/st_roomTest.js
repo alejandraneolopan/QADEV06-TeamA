@@ -48,14 +48,14 @@ describe("Smoke: Rooms - Feature", function(){
     });
 
     it('GET /services/{:serviceId}/rooms, returns status code 200', function(done){
-        request.room.getRoomByService(serviceId, function(err, res){
+        request.room.getRoomsByService(serviceId, function(err, res){
             expect(res.status).to.equal(200);
             done();
         });
     });
 
     it('GET /services/{:serviceId}/rooms/{:roomId}, returns status code 200', function(done){
-        request.room.getRoomsByService(serviceId, roomId, function(err, res){
+        request.room.getRoomByService(serviceId, roomId, function(err, res){
             expect(res.status).to.equal(200);
             done();
         });
