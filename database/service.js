@@ -17,7 +17,7 @@ var table = dbConfig.tables.service;
 /**
  * Return all services
  * @param {Object} id - Service Id
- * @param {function} callbacK - function for handle the object
+ * @param {function} callback - function for handle the object
  */
 var findService = function(id, callback){
 	mongoClient.connect(url, function(err, db) {
@@ -28,7 +28,7 @@ var findService = function(id, callback){
 
 /**
  * Return all services
- * @param {function} callbacK - function for handle the array
+ * @param {function} callback - function for handle the array
  */
 var findAllServices = function(callback){
 	mongoClient.connect(url, function(err, db) {
