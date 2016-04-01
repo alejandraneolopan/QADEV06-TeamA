@@ -52,6 +52,7 @@ var findByParameters = function (json, db, callback) {
     db.collection(table).find(
         json
         ).toArray(
+
         function(err, result) {
         callback(result);
     });

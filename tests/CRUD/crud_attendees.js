@@ -26,8 +26,26 @@ describe("CRUD - Attendees Service", function(){
     it('GET /services/{:serviceId}/attendees{?filter}/ returns a user from a specific email service', function(done){
         var filter = 'ro';
         request.services.getAttendeesByService(serviceId, filter, function(err, res){
-            var resourcesList = res.body;
-            done();
+            var accountListActual = res.body;
+            dbQuery.postCondition.findAttendeesByService(serviceId,filter,function(res){
+                var accountListExpected = res;
+                var present, totalPresent = 0;
+                accountListActual.forEach(function(accountActual)
+                {
+                    present = false;
+                    accountListExpected.forEach(function(accountExpected){
+                        if (accountExpected.dn == accountActual.dn){
+                            present = true;
+                        }
+                    });
+                    if (present){
+                        totalPresent ++;
+                    }
+                });
+                expect(totalPresent).to.equal(accountListExpected.length);
+                expect(accountListActual.length).to.equal(accountListExpected.length);
+                done();
+            });
         });
     });
 

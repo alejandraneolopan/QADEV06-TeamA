@@ -39,36 +39,43 @@ describe("CRUD - Out of Orders Service", function(){
 
 
     it('GET /out-of-orders returns all out of orders', function(done){
-            expect(outOfOrderId).not.to.equal(null);
-            done();
+        //TODO
+        expect(outOfOrderId).not.to.equal(null);
+        done();
     });
 
     it('GET /out-of-orders/{:out-of-orderId} returns one specific out of order', function(done){
+        //TODO
         expect(outOfOrderId).not.to.equal(null);
         done();
     });
 
     it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders returns all out of orders by specific Room and Service', function(done){
+        //TODO
         expect(outOfOrderId).not.to.equal(null);
         done();
     });
 
     it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders/{:outOfOrderId} returns one out of order by specific Room and Service', function(done){
+        //TODO
         expect(outOfOrderId).not.to.equal(null);
         done();
     });
 
     it('POST /services/{:serviceId}/rooms/{:roomId}/out-of-orders creates one out of order on one specific Room and Service', function(done){
+        //TODO
         expect(outOfOrderId).not.to.equal(null);
         done();
     });
 
     it('PUT /services/{:serviceId}/rooms/{:roomId}/out-of-orders/{:outOfOrderId} updates one out of order by specific Room and Service', function(done){
+        //TODO
         expect(outOfOrderId).not.to.equal(null);
         done();
     });
 
     it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders/{:outOfOrderId} deletes one out of order by specific Room and Service', function(done){
+        //TODO
         expect(outOfOrderId).not.to.equal(null);
         done();
     });
