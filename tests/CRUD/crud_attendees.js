@@ -26,8 +26,12 @@ describe("CRUD - Attendees Service", function(){
     it('GET /services/{:serviceId}/attendees{?filter}/ returns a user from a specific email service', function(done){
         var filter = 'ro';
         request.services.getAttendeesByService(serviceId, filter, function(err, res){
-            var resourcesList = res.body;
-            done();
+            var accountListActual = res.body;
+            dbQuery.postCondition.findAttendeesByService(serviceId,filter,function(res){
+                var accountListExpected = res;
+                expect(accountListActual.length).to.eql(accountListExpected.length);
+                done();
+            });
         });
     });
 
