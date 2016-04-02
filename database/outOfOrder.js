@@ -50,7 +50,7 @@ var findAllOutOfOrders = function(callback){
 var findAllOutOfOrdersByRoom = function(roomId,callback){
     mongoClient.connect(url, function(err, db) {
         DBmanager.setTable(table);
-        DBmanager.findAll(db, callback);
+        DBmanager.findByParameters({"roomId":ObjectId(roomId)}, db, callback);
     });
 };
 /**

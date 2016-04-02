@@ -64,7 +64,7 @@ describe("Out Of Order - Feature without creating out of order like precondition
         });
 
         it('GET /services/{:serviceId}/rooms/{:roomId}/out-of-orders, returns status code 200', function(done){
-            request.outOfOrders.getOutOfOrderByRoom(serviceId, roomId, outOfOrderId, function(err, res){
+            request.outOfOrders.getOutOfOrderByRoom(serviceId, roomId, function(err, res){
                 expect(res.status).to.equal(200);
                 done();
             });
