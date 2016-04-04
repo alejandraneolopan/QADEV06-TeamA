@@ -31,7 +31,7 @@ describe("CRUD - Out of Orders - Feature without creating out of order like prec
     });
 
     it('POST /services/{:serviceId}/rooms/{:roomId}/out-of-orders creates one out of order on one specific Room and Service', function(done){
-        var complementUrl = "?active=true&email=true";//TODO
+        var complementUrl = "?active=true&email=true";
         var outOfOrderBody = generator.generator_outOfOrder.generateOutOfOrder(room_ID);
         request.outOfOrders.postOutOfOrder(serviceId, room_ID, outOfOrderBody, complementUrl,function(err, res){
             var actualResult = res.body;
